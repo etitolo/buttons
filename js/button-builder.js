@@ -3,10 +3,8 @@ $(document).ready(function() {
     // attributes when the parentheses is empty.
     var removeAttr = jQuery.fn.removeAttr;
     jQuery.fn.removeAttr = function() {
-
       if (!arguments.length) {
         this.each(function() {
-
           // Looping attributes array in reverse direction
           // to avoid skipping items due to the changing length
           // when removing them on every iteration.
@@ -14,7 +12,6 @@ $(document).ready(function() {
             jQuery(this).removeAttr(this.attributes[i].name);
           }
         });
-
         return this;
       }
 
@@ -343,7 +340,7 @@ $(document).ready(function() {
         });
     } isButtonDisabled();
 
-function iconCassBuilders() {
+    function iconCassBuilders() {
         if (S(iconDirection).contains('default')) {
             buildIconDirectionSelector = "";
         } else {
@@ -411,22 +408,22 @@ function iconCassBuilders() {
             $(buttonElement).addClass(optionArrBtnClass);
         }
     });
+    
     $("form").submit(function(event) {
         event.preventDefault();
     });
     buttonChangeEntified();
-});
 
+    // Simple Sticky Menu
+    var  mn = $(".output-container");
+         mns = "output-container-scrolled";
+         hdr = $('header').height();
 
-// Simple Sticky Menu
-var  mn = $(".output-container");
-     mns = "output-container-scrolled";
-     hdr = $('header').height();
-
-$(window).scroll(function() {
-    if( $(this).scrollTop() > hdr ) {
-        mn.addClass(mns);
-    } else {
-        mn.removeClass(mns);
-    }
+    $(window).scroll(function() {
+        if( $(this).scrollTop() > hdr ) {
+            mn.addClass(mns);
+        } else {
+            mn.removeClass(mns);
+        }
+    });
 });
