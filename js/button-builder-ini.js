@@ -16,5 +16,5 @@ function subvert() {
 };
 // Load button-builder from github if you can't get it in time. 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    dojo.create("script", { type: "text/javascript", src: "//etitolo.github.io/wsi-button-builder/js/button-builder.js"}, dojo.body(), "after");
+    dojo.create("script", { type: "text/javascript", src: "//wsi-feds.github.io/buttons/js/button-builder.js"}, dojo.body(), "after");
 });

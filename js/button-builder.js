@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+$(document).ready(function() {
     //$(document).ready(function() {
     // This extends the removeAttr() method by allowing you to strip out ALL
     // attributes when the parentheses is empty.
