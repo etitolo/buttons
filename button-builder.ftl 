@@ -1,0 +1,146 @@
+[#import "/macros/newapp.ftl" as newApp/]
+[#import "/buttons/_buttons.ftl" as button/]
+
+[@newApp.newPage bodyId="button-reference" wrapId="button-reference" emulateLegacyIe=8]
+    [@wsgc.title title="WSI Button Builder"/]
+    [@wsgc.body location='top-script']
+        function addLibs() {
+            var source = ['//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js',
+                          '//cdnjs.cloudflare.com/ajax/libs/string.js/3.1.1/string.min.js', 
+                          '//cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js'];
+            var head = document.getElementsByTagName('head')[0];
+            for (var i in source) {
+               var script= document.createElement('script');
+               script.type= 'text/javascript';
+               script.src= source[i];
+               head.appendChild(script);
+            }
+        } addLibs();
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            dojo.create("script", { type: "text/javascript", src: "//etitolo.github.io/wsi-button-builder/js/button-builder.js"}, dojo.body(), "after");
+        });
+    [/@wsgc.body]
+    
+    [@wsgc.css path="/css/admin/tests/buttons/buttons.css"/]
+
+
+    <main class="main-content">
+        <div class="output-container">
+            <div class="preview-container">
+                <h2 class="label">Button Preview</h2>
+                <div class="generated-markup btnPreview">
+                    <button class="btn">Continue</button>
+                </div>
+                <pre><code class="btnCode language-markup"><div class="generated-macro"><button class="btn"></button></div></code></pre>
+            </div>
+            <div class="macro-container">
+                <h2 class="label">Generated Macro</h2>
+                <div class="dont-forget"></div>
+                <div class="generated-macro">
+                    <pre><code id="selectAll"></code></pre>
+                </div>
+            </div>
+        </div>
+        <form class="good-form">
+            <h1>Button Properties</h1>
+            <label class="select-macro">
+                <span class="name">Button Macro</span>
+                <select class="button-type">
+                    <option value="default">default</option>
+                    <option value="defaultSecondary">defaultSecondary</option>
+                    <option value="defaultFlat">defaultFlat</option>
+                    <option value="directional">directional</option>
+                    <option value="directionalSecondary">directionalSecondary</option>
+                    <option value="directionalFlat">directionalFlat</option>
+                </select>
+            </label>
+
+            <label class="btn-label-input">
+                <span class="name">Button Label</span>
+                <input class="btnLabel" value="Continue" type="text">
+            </label>
+
+            <div class="radio-box-grouping choose-element">
+                <input id="radio-box-id1" type="radio" name="radio-box-group" class="radio-box-input" value="one" checked="checked" />
+                <label class="radio-box-label radio-box-one" for="radio-box-id1">
+                    <span class="radio-box-control"><code>&lt;button&gt;</code></span>
+                </label>
+                <input id="radio-box-id2" type="radio" name="radio-box-group" class="radio-box-input" value="two" />
+                <label class="radio-box-label radio-box-two" for="radio-box-id2">
+                    <span class="radio-box-control"><code>&lt;a&gt;</code></span>
+                </label>
+                <label class="href expandable">
+                    <span class="name">href</span>
+                    <input class="href-input" value="" type="text">
+                </label>
+            </div>
+
+            <label class="button-classes">
+                <span class="name">Button Classes</span>
+                <input class="customButtonClasses" type="text">
+            </label>
+
+            <label class="button-id">
+                <span class="name">Button ID</span>
+                <input class="buttonId" type="text">
+            </label>
+
+            <label class="tabindex-container">
+                <span class="name">tabindex</span>
+                <input class="tabindex" type="text">
+            </label>
+            
+            <label class="attributes-container">
+                <span class="name">Attributes (If you don't see the an attribute you're looking for, add it here.)   </span>
+                <input class="attributesInput" type="text">
+            </label>
+
+            <div class="btn-size">   
+                <label class="param-value">
+                    <div class="param">Button Size:</div>
+                    <input class="btnSmall" value="small" type="checkbox">
+                    <span class="param-value">Small</span>
+                </label>
+            </div>
+
+            <div class="disabled">
+                <div class="param">Button State:</div>
+                <label class="param-value">
+                    <input class="buttonAttributeDisabled" value="disabled" type="checkbox">
+                    <span class="param-value">Disabled</span>
+                </label>
+            </div>
+
+            <!-- Icons -->
+            <section class="iconParams expandable">
+                <h2>Icon Parameters</h2>
+                <label class="icon-classes">
+                    <span class="name">Custom Icon Classes</span>
+                    <input class="customIconClasses" type="text">
+                </label>
+                <label class="icon-direction">
+                    <span class="name">Icon Direction</span>
+                    <select class="iconDirection">
+                        <option value="default">Right (default)</option>
+                        <option value="left">Left</option>
+                        <option value="up">Up</option>
+                        <option value="down">Down</option>
+                    </select>
+                </label>
+                <label class="icon-set-label">
+                    <span class="name">Icon Set</span>
+                    <select class="iconSet">
+                        <option value="default">Primary (default)</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="alternate">Alternate</option>
+                    </select>
+                </label>
+            </section>
+            <label class="href-input">
+                <span class="name">.output-name</span>
+                <input class="output-name" value="Continue" type="text">
+            </label>
+            <button class="btn btn-primary" id="clearForm" type="reset">Reset</button>
+        </form>
+    </main>
+[/@newApp.newPage]
