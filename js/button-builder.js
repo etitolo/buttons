@@ -75,6 +75,7 @@ $(document).ready(function() {
         hrefValue = $(".href-input").val();
         buttonClasses = $(".customButtonClasses").val();
         buttonId = $(".buttonId").val();
+        buttonGroup = $(".buttonGroup").val();
         tabindex = $(".tabindex").val();
         buttonSize = $(".btnSmall").val();
         isDisabled = $(".buttonAttributeDisabled").val();
@@ -139,6 +140,12 @@ $(document).ready(function() {
             buildButtonAttributes = "";
         }
 
+        if (S(buttonGroup).contains('default')) {
+            buildButtonGroup = "";
+        } else {
+            buildButtonGroup = newLineWithIndent + " buttonGroup='" + buttonGroup + "'" ;
+        }
+
         if (S(iconSet).contains('default')) {
             buildIconSet = "";
         } else {
@@ -157,7 +164,7 @@ $(document).ready(function() {
             buildIconClasses = "";
         }
                 
-        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
+        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam + buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
     }
 
     function buttonChangeEntified() {
@@ -354,6 +361,21 @@ $(document).ready(function() {
         }
     }
 
+    function changeButtonGroup() {
+        $(".buttonGroup").change(function() {
+            $(".macro-output").text(macroSelected);
+            buildMacroParams();
+            iconCassBuilders();
+            if (buttonGroup !== "default") {
+                $(buttonElement).addClass("btn-registry");
+            } else {
+                $(buttonElement).removeClass("btn-registry");
+            }
+            buttonChangeEntified();
+        });
+    }
+    changeButtonGroup();
+
     function changeIconSelectors() {
         $(".iconDirection, .iconSet").change(function() {
             $(".macro-output").text(macroSelected);
@@ -392,12 +414,10 @@ $(document).ready(function() {
         var range = document.createRange();
         var selection = window.getSelection();
         range.selectNodeContents(document.getElementById('selectAll'));
-        
         selection.removeAllRanges();
         selection.addRange(range);
     });
             
-    
     // clear the form
     $("#clearForm").click(function() {
         $(".macro-output").text(initialSelect);
@@ -411,8 +431,7 @@ $(document).ready(function() {
     
     $("form").submit(function(event) {
         event.preventDefault();
-    });
-    buttonChangeEntified();
+    }); buttonChangeEntified();
 
     // Simple Sticky Menu
     var  mn = $(".output-container");
