@@ -195,7 +195,7 @@ $(document).ready(function() {
                     $(buttonElement).removeClass().addClass("btn " + optionArrBtnClass);
                     if (optionArrIconClass != null) {
                         $(".iconParams").removeClass("expandable");
-                        $(".btn").html(btnLabelValue + "<i class='icon " + optionArrIconClass + "'></i>");
+                        $(buttonElement).html(btnLabelValue + "<i class='icon " + optionArrIconClass + "'></i>");
                     } else {
                         $(".icon").detach();
                         $(".iconParams").addClass("expandable");
@@ -270,9 +270,9 @@ $(document).ready(function() {
             var builda = S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s;
             
             if ($('#radio-box-id1').is(':checked') && buttonAttributes !== "") {   
-              $(".btnPreview .btn").replaceWith(S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s);
+              $(buttonElement).replaceWith(S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s);
             } else if ($('#radio-box-id2').is(':checked') && buttonAttributes !== "")  {
-               $(".btnPreview .btn").replaceWith(S(str).replaceAll('<a ', '<a ' + buttonAttributes + " ").s);
+               $(buttonElement).replaceWith(S(str).replaceAll('<a ', '<a ' + buttonAttributes + " ").s);
             } else {
                 $(buttonElement).removeAttr().addClass("btn " + optionArrBtnClass);
             }
