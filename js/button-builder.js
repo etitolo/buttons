@@ -3,30 +3,31 @@ $(document).ready(function() {
     // attributes when the parentheses is empty.
     var removeAttr = jQuery.fn.removeAttr;
     jQuery.fn.removeAttr = function() {
-      if (!arguments.length) {
-        this.each(function() {
-          // Looping attributes array in reverse direction
-          // to avoid skipping items due to the changing length
-          // when removing them on every iteration.
-          for (var i = this.attributes.length -1; i >= 0 ; i--) {
-            jQuery(this).removeAttr(this.attributes[i].name);
-          }
-        });
-        return this;
-      }
 
-      return removeAttr.apply(this, arguments);
+        if (!arguments.length) {
+            this.each(function() {
+                // Looping attributes array in reverse direction
+                // to avoid skipping items due to the changing length
+                // when removing them on every iteration.
+                for (var i = this.attributes.length - 1; i >= 0; i--) {
+                    jQuery(this).removeAttr(this.attributes[i].name);
+                }
+            });
+            return this;
+        }
+
+        return removeAttr.apply(this, arguments);
     };
-    
+
     // Workaround for FTL barfing when displaying itself as <code>.
-    $(".dont-forget").html("[#import '/common/buttons/_buttons.ftl' as button/]");
+    $(".dont-forget").html("[#import '/common/buttons/_buttons.ftl' as button /]");
     $(".generated-macro code").html("[@button.<span class='macro-output'></span> /]");
 
     var initialSelect = $(".button-type").val();
     var hrefValue = $(".href-input").val();
     var buttonElement = ".btnPreview .btn";
     var iconElement = ".btnPreview .icon";
-    var newLineWithIndent= "\n\040\040\040\040";
+    var newLineWithIndent = "\n\040\040\040\040";
 
     var macroClassStrcture = [{
         value: "default",
@@ -35,6 +36,10 @@ $(document).ready(function() {
     }, {
         value: "defaultSecondary",
         btnClasses: 'btn-secondary',
+        iconClasses: null
+    }, {
+        value: "defaultAlternate",
+        btnClasses: 'btn-alternate',
         iconClasses: null
     }, {
         value: "defaultFlat",
@@ -49,6 +54,10 @@ $(document).ready(function() {
         btnClasses: 'btn-secondary',
         iconClasses: 'icon-directional'
     }, {
+        value: "directionalAlternate",
+        btnClasses: 'btn-alternate',
+        iconClasses: 'icon-directional'
+    }, {
         value: "directionalFlat",
         btnClasses: 'btn-flat',
         iconClasses: 'icon-directional'
@@ -60,7 +69,6 @@ $(document).ready(function() {
         var optionArrIconClass = macroClassStrcture[i].iconClasses;
         var macroSelected = $(".button-type").val();
         var btnLabelValue = $(".btnLabel").val();
-   
         $(".macro-output").text(initialSelect);
         $(".macro-output").text(macroSelected + newLineWithIndent + " buttonLabel='" + btnLabelValue + "'");
         $(buttonElement).text(btnLabelValue);
@@ -68,14 +76,13 @@ $(document).ready(function() {
             $(buttonElement).addClass(optionArrBtnClass);
         }
     }
-    
+
     function buildMacroParams() {
         macroSelected = $(".button-type").val();
         btnLabelValue = $(".btnLabel").val();
         hrefValue = $(".href-input").val();
         buttonClasses = $(".customButtonClasses").val();
         buttonId = $(".buttonId").val();
-        buttonGroup = $(".buttonGroup").val();
         tabindex = $(".tabindex").val();
         buttonSize = $(".btnSmall").val();
         isDisabled = $(".buttonAttributeDisabled").val();
@@ -91,80 +98,74 @@ $(document).ready(function() {
         } else {
             buildLabelParam = "";
         }
-        
+
         if (hrefValue !== "") {
             buildHrefParam = newLineWithIndent + " href='" + hrefValue + "'";
         } else {
             buildHrefParam = "";
         }
-        
+
         if (buttonClasses !== "") {
-            buildButtonClassParam = newLineWithIndent + " customButtonClasses='" + buttonClasses + "'" ; 
+            buildButtonClassParam = newLineWithIndent + " customButtonClasses='" + buttonClasses + "'";
         } else {
             buildButtonClassParam = "";
         }
-        
+
         if (buttonAttributes !== "") {
-            buildButtonAttributesParam = newLineWithIndent + " attributes='" + buttonAttributes + "'" ; 
+            buildButtonAttributesParam = newLineWithIndent + " attributes='" + buttonAttributes + "'";
         } else {
             buildButtonAttributesParam = "";
         }
-        
+
         if (buttonId !== "") {
-            buildButtonIdParam = newLineWithIndent + " buttonId='" + buttonId + "'"; 
+            buildButtonIdParam = newLineWithIndent + " buttonId='" + buttonId + "'";
         } else {
             buildButtonIdParam = "";
         }
-        
+
         if (tabindex !== "") {
-            buildButtonTabindexParam = newLineWithIndent + " tabindex='" + tabindex + "'" ;
+            buildButtonTabindexParam = newLineWithIndent + " tabindex='" + tabindex + "'";
         } else {
             buildButtonTabindexParam = "";
         }
-        
+
         if ($(".btnSmall:checked").length === 1) {
-            buildButtonSizeParam = newLineWithIndent + " buttonSize='" + buttonSize + "'" ;
+            buildButtonSizeParam = newLineWithIndent + " buttonSize='" + buttonSize + "'";
         } else {
             buildButtonSizeParam = "";
         }
-        
+
         if ($(".buttonAttributeDisabled:checked").length === 1) {
-            buildDisabledAttribute = newLineWithIndent + " buttonAttributeDisabled='" + isDisabled + "'" ;
+            buildDisabledAttribute = newLineWithIndent + " buttonAttributeDisabled='" + isDisabled + "'";
         } else {
             buildDisabledAttribute = "";
         }
-        
+
         if (buttonAttributes !== "") {
-            buildButtonAttributes = newLineWithIndent + " attriubutes='" + buttonAttributes + "'" ;
+            buildButtonAttributes = newLineWithIndent + " attriubutes='" + buttonAttributes + "'";
         } else {
             buildButtonAttributes = "";
-        }
-
-        if (S(buttonGroup).contains('default')) {
-            buildButtonGroup = "";
-        } else {
-            buildButtonGroup = newLineWithIndent + " buttonGroup='" + buttonGroup + "'" ;
         }
 
         if (S(iconSet).contains('default')) {
             buildIconSet = "";
         } else {
-            buildIconSet = newLineWithIndent + " iconSet='" + iconSet + "'" ;
+            buildIconSet = newLineWithIndent + " iconSet='" + iconSet + "'";
         }
-        
+
         if (S(iconDirection).contains('default')) {
             buildIconDirection = "";
         } else {
-            buildIconDirection = newLineWithIndent + " iconDirection='" + iconDirection + "'" ;
+            buildIconDirection = newLineWithIndent + " iconDirection='" + iconDirection + "'";
         }
 
         if (iconClasses !== "") {
-            buildIconClasses = newLineWithIndent + "customIconClasses='" + iconClasses + "'" ;
+            buildIconClasses = newLineWithIndent + "customIconClasses='" + iconClasses + "'";
         } else {
             buildIconClasses = "";
         }
-                
-        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam + buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
+
+        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
     }
 
     function buttonChangeEntified() {
@@ -172,7 +173,7 @@ $(document).ready(function() {
         $(".btnCode").replaceWith("<code class='btnCode language-markup'>" + entify + "</code>");
         Prism.highlightAll();
     }
-    
+
     function conditionalSpace(pre) {
         if (pre !== "") {
             return " ";
@@ -190,7 +191,6 @@ $(document).ready(function() {
                 optionArrValue = macroClassStrcture[i].value;
                 optionArrBtnClass = macroClassStrcture[i].btnClasses;
                 optionArrIconClass = macroClassStrcture[i].iconClasses;
-
                 if (optionArrValue === macroSelected) {
                     $(buttonElement).removeClass().addClass("btn " + optionArrBtnClass);
                     if (optionArrIconClass != null) {
@@ -200,28 +200,27 @@ $(document).ready(function() {
                         $(".icon").detach();
                         $(".iconParams").addClass("expandable");
                     }
-                    
                     buttonChangeEntified();
                 }
             }
             Prism.highlightAll();
         });
-    } selectMacro();
-    
-   function addButtonLabel() {
-      $(".btnLabel").on("keyup", function buttonLabelOut() {
-          $(".output-name").val(btnLabelValue);
-          buildMacroParams();
-          if ($(iconElement).hasClass('icon')) {
-                  $(buttonElement).html(btnLabelValue + "<i class='icon " + optionArrIconClass + "'></i>");
-              } else {
-                  $(buttonElement).html(btnLabelValue);
-              }
-          buttonChangeEntified();
-          Prism.highlightAll();
-      });
-  }
-  addButtonLabel();
+    }
+    selectMacro();
+
+    function addButtonLabel() {
+        $(".btnLabel").on("keyup", function buttonLabelOut() {
+            buildMacroParams();
+            if ($(iconElement).hasClass('icon')) {
+                $(buttonElement).html(btnLabelValue + "<i class='icon " + optionArrIconClass + "'></i>");
+            } else {
+                $(buttonElement).html(btnLabelValue);
+            }
+            buttonChangeEntified();
+            Prism.highlightAll();
+        });
+    }
+    addButtonLabel();
 
     function captureHref() {
         $(".href-input").keyup(function() {
@@ -245,9 +244,10 @@ $(document).ready(function() {
             }
             buttonChangeEntified();
         });
-    } buttonIdInput();
+    }
+    buttonIdInput();
 
-    
+
     function captureTabindex() {
         $(".tabindex").keyup(function() {
             buildMacroParams();
@@ -258,29 +258,31 @@ $(document).ready(function() {
             }
             buttonChangeEntified();
         });
-    } captureTabindex();
+    }
+    captureTabindex();
 
     function captureAttributes() {
         $(".attributesInput").change(function() {
             buildMacroParams();
-            var re = /^<(a|button) /; 
+            var re = /^<(a|button) /;
             var str = $('<div />').append($(buttonElement).clone()).html();
             var rebuildParentOpen = '<div class="generated-markup btnPreview">';
             var rebuildParentClose = S(str).replaceAll('</button>', '</button></div>').s;
             var builda = S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s;
-            
-            if ($('#radio-box-id1').is(':checked') && buttonAttributes !== "") {   
-              $(buttonElement).replaceWith(S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s);
-            } else if ($('#radio-box-id2').is(':checked') && buttonAttributes !== "")  {
-               $(buttonElement).replaceWith(S(str).replaceAll('<a ', '<a ' + buttonAttributes + " ").s);
+
+            if ($('#radio-box-id1').is(':checked') && buttonAttributes !== "") {
+                $(".btnPreview .btn").replaceWith(S(str).replaceAll('<button ', '<button ' + buttonAttributes + " ").s);
+            } else if ($('#radio-box-id2').is(':checked') && buttonAttributes !== "") {
+                $(".btnPreview .btn").replaceWith(S(str).replaceAll('<a ', '<a ' + buttonAttributes + " ").s);
             } else {
                 $(buttonElement).removeAttr().addClass("btn " + optionArrBtnClass);
             }
-            
+
             Prism.highlightAll();
             buttonChangeEntified();
         });
-    } captureAttributes();
+    }
+    captureAttributes();
 
 
     function buttonClassesInput() {
@@ -298,8 +300,9 @@ $(document).ready(function() {
             }
             buttonChangeEntified();
         });
-    } buttonClassesInput();
-        
+    }
+    buttonClassesInput();
+
     function changeElement() {
         $(".radio-box-input").change(function() {
             buildMacroParams();
@@ -321,8 +324,9 @@ $(document).ready(function() {
             buttonChangeEntified();
             Prism.highlightAll();
         });
-    } changeElement();
-    
+    }
+    changeElement();
+
     function buttonSize() {
         $(".btnSmall").click(function() {
             buildMacroParams();
@@ -333,7 +337,8 @@ $(document).ready(function() {
             }
             buttonChangeEntified();
         });
-    } buttonSize();
+    }
+    buttonSize();
 
     function isButtonDisabled() {
         $(".buttonAttributeDisabled").click(function() {
@@ -345,7 +350,8 @@ $(document).ready(function() {
             }
             buttonChangeEntified();
         });
-    } isButtonDisabled();
+    }
+    isButtonDisabled();
 
     function iconCassBuilders() {
         if (S(iconDirection).contains('default')) {
@@ -360,21 +366,6 @@ $(document).ready(function() {
             buildIconSetSelector = "icon-" + iconSet + "-directional";
         }
     }
-
-    function changeButtonGroup() {
-        $(".buttonGroup").change(function() {
-            $(".macro-output").text(macroSelected);
-            buildMacroParams();
-            iconCassBuilders();
-            if (buttonGroup !== "default") {
-                $(buttonElement).addClass("btn-registry");
-            } else {
-                $(buttonElement).removeClass("btn-registry");
-            }
-            buttonChangeEntified();
-        });
-    }
-    changeButtonGroup();
 
     function changeIconSelectors() {
         $(".iconDirection, .iconSet").change(function() {
@@ -410,36 +401,36 @@ $(document).ready(function() {
     iconClassesInput();
 
     // When you click on the macro, select all.
-    document.getElementById('selectAll').addEventListener('click', function(){
+    document.getElementById('selectAll').addEventListener('click', function() {
         var range = document.createRange();
         var selection = window.getSelection();
         range.selectNodeContents(document.getElementById('selectAll'));
+
         selection.removeAllRanges();
         selection.addRange(range);
     });
-            
+
     // clear the form
     $("#clearForm").click(function() {
         $(".macro-output").text(initialSelect);
-        $(".output-name").val(initialSelect);
         $(".macro-output").text(macroSelected + " buttonLabel='" + btnLabelValue + "'");
         $(buttonElement).text(btnLabelValue);
         if (initialSelect === optionArrValue) {
             $(buttonElement).addClass(optionArrBtnClass);
         }
     });
-    
     $("form").submit(function(event) {
         event.preventDefault();
-    }); buttonChangeEntified();
+    });
+    buttonChangeEntified();
 
     // Simple Sticky Menu
-    var  mn = $(".output-container");
-         mns = "output-container-scrolled";
-         hdr = $('header').height();
+    var mn = $(".output-container");
+    mns = "output-container-scrolled";
+    hdr = $('header').height();
 
     $(window).scroll(function() {
-        if( $(this).scrollTop() > hdr ) {
+        if ($(this).scrollTop() > hdr) {
             mn.addClass(mns);
         } else {
             mn.removeClass(mns);
