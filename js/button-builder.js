@@ -85,6 +85,7 @@ $(document).ready(function() {
         buttonId = $(".buttonId").val();
         tabindex = $(".tabindex").val();
         buttonSize = $(".btnSmall").val();
+        buttonGroup = $(".buttonGroup").val();
         isDisabled = $(".buttonAttributeDisabled").val();
         buttonAttributes = $(".attributesInput").val();
         iconDirection = $(".iconDirection").val();
@@ -147,6 +148,12 @@ $(document).ready(function() {
             buildButtonAttributes = "";
         }
 
+        if (S(buttonGroup).contains('default')) {
+            buildButtonGroup = "";
+        } else {
+            buildButtonGroup = newLineWithIndent + " buttonGroup='" + buttonGroup + "'" ;
+        }
+
         if (S(iconSet).contains('default')) {
             buildIconSet = "";
         } else {
@@ -165,7 +172,7 @@ $(document).ready(function() {
             buildIconClasses = "";
         }
 
-        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
+        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam +  buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
     }
 
     function buttonChangeEntified() {
@@ -381,6 +388,21 @@ $(document).ready(function() {
         });
     }
     changeIconSelectors();
+
+    function changeButtonGroup() {
+        $(".buttonGroup").change(function() {
+            $(".macro-output").text(macroSelected);
+            buildMacroParams();
+            iconCassBuilders();
+            if (buttonGroup !== "default") {
+                $(buttonElement).addClass("btn-registry");
+            } else {
+                $(buttonElement).removeClass("btn-registry");
+            }
+            buttonChangeEntified();
+        });
+    }
+    changeButtonGroup();
 
     function iconClassesInput() {
         $(".customIconClasses").keyup(function() {
