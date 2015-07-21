@@ -20,7 +20,7 @@ $(document).ready(function() {
     };
 
     // Workaround for FTL barfing when displaying itself as <code>.
-    $(".dont-forget").html("[#import '/common/buttons/_buttons.ftl' as button /]");
+    $(".dont-forget").html("[#import '/common/buttons/_buttons.ftl' as button/]");
     $(".generated-macro code").html("[@button.<span class='macro-output'></span> /]");
 
     var initialSelect = $(".button-type").val();
