@@ -85,6 +85,7 @@ $(document).ready(function() {
         buttonId = $(".buttonId").val();
         tabindex = $(".tabindex").val();
         buttonSize = $(".btnSmall").val();
+        buttonWidth = $(".btnWidth").val();
         buttonGroup = $(".buttonGroup").val();
         isDisabled = $(".buttonAttributeDisabled").val();
         buttonAttributes = $(".attributesInput").val();
@@ -136,6 +137,12 @@ $(document).ready(function() {
             buildButtonSizeParam = "";
         }
 
+        if ($(".btnWidth:checked").length === 1) {
+            buildButtonWidthParam = newLineWithIndent + " buttonWidth='" + buttonWidth + "'";
+        } else {
+            buildButtonWidthParam = "";
+        }
+
         if ($(".buttonAttributeDisabled:checked").length === 1) {
             buildDisabledAttribute = newLineWithIndent + " buttonAttributeDisabled='" + isDisabled + "'";
         } else {
@@ -172,7 +179,7 @@ $(document).ready(function() {
             buildIconClasses = "";
         }
 
-        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam +  buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildIconClasses + buildIconDirection + buildIconSet);
+        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam +  buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildButtonWidthParam + buildIconClasses + buildIconDirection + buildIconSet);
     }
 
     function buttonChangeEntified() {
@@ -346,6 +353,19 @@ $(document).ready(function() {
         });
     }
     buttonSize();
+
+    function buttonWidth() {
+        $(".btnWidth").click(function() {
+            buildMacroParams();
+            if ($(".btnWidth:checked").length === 1) {
+                $(buttonElement).addClass("btn-full");
+            } else {
+                $(buttonElement).removeClass("btn-full");
+            }
+            buttonChangeEntified();
+        });
+    }
+    buttonWidth();
 
     function isButtonDisabled() {
         $(".buttonAttributeDisabled").click(function() {
