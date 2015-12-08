@@ -85,6 +85,7 @@ $(document).ready(function() {
         buttonId = $(".buttonId").val();
         tabindex = $(".tabindex").val();
         buttonSize = $(".btnSmall").val();
+        buttonSizeMondo = $(".btnMondo").val();
         buttonWidth = $(".btnWidth").val();
         buttonGroup = $(".buttonGroup").val();
         isDisabled = $(".buttonAttributeDisabled").val();
@@ -137,6 +138,12 @@ $(document).ready(function() {
             buildButtonSizeParam = "";
         }
 
+        if ($(".btnMondo:checked").length === 1) {
+            buildButtonSizeMondoParam = newLineWithIndent + " buttonSizeMondo='" + buttonSizeMondo + "'";
+        } else {
+            buildButtonSizeMondoParam = "";
+        }
+
         if ($(".btnWidth:checked").length === 1) {
             buildButtonWidthParam = newLineWithIndent + " buttonWidth='" + buttonWidth + "'";
         } else {
@@ -179,7 +186,7 @@ $(document).ready(function() {
             buildIconClasses = "";
         }
 
-        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam +  buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildButtonWidthParam + buildIconClasses + buildIconDirection + buildIconSet);
+        return $(".macro-output").text(macroSelected + buildLabelParam + buildHrefParam + buildButtonClassParam + buildButtonIdParam +  buildButtonGroup + buildButtonTabindexParam + buildDisabledAttribute + buildButtonAttributesParam + buildButtonSizeParam + buildButtonSizeMondoParam + buildButtonWidthParam + buildIconClasses + buildIconDirection + buildIconSet);
     }
 
     function buttonChangeEntified() {
@@ -353,6 +360,19 @@ $(document).ready(function() {
         });
     }
     buttonSize();
+
+    function buttonSizeMondo() {
+        $(".btnMondo").click(function() {
+            buildMacroParams();
+            if ($(".btnMondo:checked").length === 1) {
+                $(buttonElement).addClass("btn-mondo");
+            } else {
+                $(buttonElement).removeClass("btn-mondo");
+            }
+            buttonChangeEntified();
+        });
+    }
+    buttonSizeMondo();
 
     function buttonWidth() {
         $(".btnWidth").click(function() {
