@@ -1,0 +1,173 @@
+// Because buttons get imported globally, we can't use FontAwesome directionals
+// on buttons unless the FontAwesome framework is present the brand's core and
+// new-core. Since none of the brands are doing this, these icons won't work
+// anywhere but checkout. Since our version of Sass doesn't have variable-
+// exists($name), and we're still waiting for Sass 4.0's import-once, I've added
+// !optional flags on the extends so they fail "gracefully." When we get I'll
+// variable-exists($name), I'll add an @error or @debug so that we cover the
+// "Where are my icons?"
+
+@each $set in $directionalIconStackIndex
+    @if $set != none
+        @if $secondaryDirectionalIconSet == $set
+            $directionalIconStack: secondary-
+        @else if $alternateDirectionalIconSet == $set
+            $directionalIconStack: alternate-
+        @else
+            $directionalIconStack: ""
+        @if index($directionalFaIconSetIndex, $set)
+            @if $set == fa-angle
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle
+                @else if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle
+                %fa-angle
+                    &:before
+                        // FontAwesome single angle right
+                        content: "\f105"
+                    &.#{$icon-prefix}-directional-left
+                        &:before 
+                            // FontAwesome single angle left
+                            content: "\f104"
+                    &.#{$icon-prefix}-directional-down
+                        &:before 
+                            // FontAwesome single angle down
+                            content: "\f107"
+                    &.#{$icon-prefix}-directional-up
+                        &:before 
+                            // FontAwesome single angle up
+                            content: "\f106"
+            @if $set == fa-angle-double
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle-double
+                @else if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle-double
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-angle-double
+                %fa-angle-double
+                    &:before
+                        // FontAwesome double angle right
+                        content: "\f101"
+                    &.#{$icon-prefix}-directional-left
+                        &:before 
+                            // FontAwesome double angle left
+                            content: "\f100"
+                    &.#{$icon-prefix}-directional-down
+                        &:before
+                            // FontAwesome double angle down
+                            content: "\f103"
+                    &.#{$icon-prefix}-directional-up
+                        &:before
+                            // FontAwesome double angle up
+                            content: "\f102"
+            @if $set == fa-caret
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                @else if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                %fa-caret
+                    &:before
+                        // FontAwesome caret right (solid equilateral triangle)
+                        content: "\f0da"
+                    &.#{$icon-prefix}-directional-left
+                        &:before
+                            // FontAwesome caret left (solid equilateral triangle)
+                            content: "\f0d9"
+                    &.#{$icon-prefix}-directional-down
+                        &:before
+                            // FontAwesome caret down (solid equilateral triangle)
+                            content: "\f0d7"
+                    &.#{$icon-prefix}-directional-up
+                        &:before
+                            // FontAwesome caret up (solid equilateral triangle)
+                            content: "\f0d8"
+            @if $set == fa-chevron
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                @else if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonFaDirectionalStyles 
+                        @extend %fa-caret
+                %fa-caret
+                    &:before
+                        // FontAwesome chevron right
+                        content: "\f054"
+                    &.#{$icon-prefix}-directional-left
+                        &:before
+                            // FontAwesome chevron left
+                            content: "\f053"
+                    &.#{$icon-prefix}-directional-down
+                        &:before 
+                            // FontAwesome chevron down
+                            content: "\f078"
+                    &.#{$icon-prefix}-directional-up
+                        &:before 
+                            // FontAwesome chevron up
+                            content: "\f077"
+
+$faIconSize: $iconFontSize
+
+%commonFaDirectionalStyles    
+    @include fa-icon
+    $faIconSize: $iconFontSize * 1.425
+    $iconTextFaLineHeight: $buttonHeight / $faIconSize * .97
+    line-height: $iconTextFaLineHeight
+    +font-size($faIconSize)
+    .#{$btn-prefix}-small > &
+        line-height: ($buttonSmallHeight / $faIconSize) * 1.06
+
+@function isIconSetInStack()
+    @if $registryDirectionalIconSet == $primaryDirectionalIconSet
+        @return $primaryDirectionalIconSet
+    @else if $registryDirectionalIconSet == $secondaryDirectionalIconSet
+        @return $secondaryDirectionalIconSet
+    @else if $registryDirectionalIconSet == $alternateDirectionalIconSet
+        @return $alternateDirectionalIconSet
+
+@if index($directionalFaIconSetIndex, $registryDirectionalIconSet) != false
+    .#{$btn-prefix}-registry 
+        .#{$icon-prefix}-directional
+            $faIconSize: $iconFontSize * 1.125
+            @if nth($buttonFontStack,1) == Flama-5n or nth($defaultFontStack,1) == Flama
+                $buttonRegistryTextLineHeight: $buttonRegistryHeight / $faIconSize  * 1.01
+            @else
+                $buttonRegistryTextLineHeight: $buttonRegistryHeight / $faIconSize
+            +font-size($faIconSize)
+            line-height: $buttonRegistryTextLineHeight
+            .#{$btn-prefix}-small > &
+                line-height: ($buttonSmallHeight / $faIconSize) * 1.06
+            @if $registryDirectionalIconSet == $primaryDirectionalIconSet
+                @extend .#{$icon-prefix}-primary-directional
+            @else if $registryDirectionalIconSet == $secondaryDirectionalIconSet
+                @extend .#{$icon-prefix}-secondary-directional
+            @else if $registryDirectionalIconSet == $alternateDirectionalIconSet
+                @extend .#{$icon-prefix}-alternate-directional
+

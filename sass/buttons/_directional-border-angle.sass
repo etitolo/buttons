@@ -1,0 +1,22 @@
+// Miter joint border angle directionals (triangle icon)
+// TODO: refactor names to .#{$icon-prefix}-directional, .#{$icon-prefix}-directional-left, .#{$icon-prefix}-directional-up, .#{$icon-prefix}-directional-down
+.#{$icon-prefix}-border-caret-left,
+.#{$icon-prefix}-border-caret-right
+    width: 0
+    height: 0
+    border-style: solid
+    margin-top: 5px
+
+.#{$icon-prefix}-border-caret-right
+    border-width: 7px 0 7px 10px
+    border-color: transparent transparent transparent $iconPrimary
+    &.icon-lg
+        border-width: 12px 0 12px 15px
+        margin-top: 0
+
+.#{$icon-prefix}-border-caret-left
+    border-width: 7px 10px 7px 0
+    border-color: transparent $iconPrimary transparent transparent
+    &.icon-lg
+        border-width: 12px 15px 12px 0
+        margin-top: 0

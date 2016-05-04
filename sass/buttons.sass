@@ -1,0 +1,167 @@
+@import "base"
+@import "../node_modules/font-awesome/scss/variables"
+@import "../node_modules/font-awesome/scss/mixins" 
+
+$btn-prefix: btn !default
+$icon-prefix: icon !default
+
+// * GLOBAL Button Parameters *
+$buttonHeight:                          42px !default
+$buttonPadding:                         0 20px !default
+// Sometimes the trailing padding on a button icon can give the appearance of
+// "too much" padding. This value reduces the padding on whatever side the icon is
+// being used.
+$buttonIconPadOffset:                   0 !default
+$buttonBorderRadius:                    3px !default
+// If we don't declare a font stack, Chrome defaults <button> to
+// "font: normal normal normal 11px/normal 'Lucida Grande'"
+$buttonFontStack:                       $defaultFontStack !default
+$buttonFontSize:                        16px !default
+$buttonTextTransform:                   uppercase !default
+$buttonFontWeight:                      normal !default
+// Font Smoothing: Adds -webkit-font-smoothing: antialiased and -moz-osx-font-smoothing: grayscale. 
+// Smoothing tends to "sharpen" aliasing on complex and thick weighted fonts. 
+$buttonLabelFontSmoothing:              false !default
+// Be very careful with line-height. 
+$buttonTextLineHeight:                  $buttonHeight / $buttonFontSize !default 
+// Button Focus: sets the box shadow depth when a button is in focus. Use whole integers 0-5.
+$buttonFocusDropShadowDepth:            2 !default    
+
+// * PRIMARY Button *
+// $buttonPrimaryBackground is used in conjunction with the "background" shortcut property. 
+// In other words, you can set background to: #000 url('path/to/something.png') top center repeat
+$buttonPrimaryBackground:               #0275d8 !default
+$buttonPrimaryText:                     $_white !default
+$buttonPrimaryBorder:                   none !default
+$buttonPrimaryOutline:                  none !default
+$buttonPrimaryBoxShadow:                none !default
+
+// * SECONDRY Button *
+// $buttonSecondaryBackground is used in conjunction with the "background" shortcut property.
+// In other words, you can set background to: #000 url('path/to/something.png') top center repeat
+$buttonSecondaryBackground:             $_greyscale40 !default
+$buttonSecondaryText:                   $_white !default
+$buttonSecondaryBorder:                 none !default
+$buttonSecondaryOutline:                none !default
+$buttonSecondaryBoxShadow:              none !default
+
+// * Alternate Button *
+// $buttonAlternateBackground is used in conjunction with the "background" shortcut property.
+// In other words, you can set background to: #000 url('path/to/something.png') top center repeat
+$buttonAlternateBackground:             $_white !default
+$buttonAlternateText:                   $_greyscale80 !default
+$buttonAlternateBorder:                 1px solid $_greyscale80 !default
+$buttonAlternateOutline:                none !default
+$buttonAlternateBoxShadow:              none !default
+
+// * FLAT Button *
+// A flat button has the appearance of a link, has a hover state, but does not have depth on click or touch.
+// $buttonFlatBackground is used in conjunction with the "background" shortcut property.
+$buttonFlatBackground:                  transparent !default
+$buttonFlatText:                        $linkColor !default
+$buttonFlatBorder:                      none !default
+$buttonFlatOutline:                     none !default
+$buttonFlatBoxShadow:                   none !default
+$buttonFlatBorderRadius:                3px !default
+$buttonFlatUnderscore:                  1px solid transparent !default
+$buttonFlatHoverUnderscore:             1px solid transparent !default
+$buttonFlatTransition:                  box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.7s cubic-bezier(0.25, 0.8, 0.25, 1) !default
+$buttonFlatHoverBckgrnd:                rgba($linkColor, 0.2) !default
+
+// * REGISTRY Button *
+// In the button macro, registry buttons are part of the category called a "buttonGroup."
+// The only brands that expose this are currently WE and WS. 
+$buttonRegistryIsOn:                    false !default
+$buttonRegistryHeight:                  $buttonHeight  !default
+$buttonRegistryPadding:                 $buttonPadding !default
+$buttonRegistryBorderRadius:            $buttonBorderRadius !default
+$buttonRegistryFontStack :              $buttonFontStack !default
+$buttonRegistryFontSize:                $buttonFontSize !default
+$buttonRegistryTextTransform:           $buttonTextTransform !default
+$buttonRegistryFontWeight:              $buttonFontWeight !default
+$buttonRegistryTextLineHeight:          $buttonRegistryHeight / $buttonRegistryFontSize !default
+// $buttonRegistryBackground is used in conjunction with the "background" shortcut property.
+$buttonRegistryPrimaryBackground:       $buttonPrimaryBackground !default
+$buttonRegistryPrimaryText:             $buttonPrimaryText !default
+$buttonRegistryPrimaryBorder:           $buttonPrimaryBorder !default
+$buttonRegistryPrimaryOutline:          $buttonPrimaryOutline !default
+$buttonRegistryPrimaryBoxShadow:        $buttonPrimaryBoxShadow !default
+// $buttonRegistryBackground is used in conjunction with the "background" shortcut property.
+$buttonRegistrySecondaryBackground:     $buttonSecondaryBackground !default
+$buttonRegistrySecondaryText:           $buttonSecondaryText !default
+$buttonRegistrySecondaryBorder:         $buttonSecondaryBorder !default
+$buttonRegistrySecondaryOutline:        $buttonSecondaryOutline !default
+$buttonRegistrySecondaryBoxShadow:      $buttonSecondaryBoxShadow !default
+// Use "background" shortcut property.
+$buttonRegistryAlternateBackground:     $buttonAlternateBackground !default
+$buttonRegistryAlternateText:           $buttonAlternateText !default
+$buttonRegistryAlternateBorder:         $buttonAlternateBorder !default
+$buttonRegistryAlternateOutline:        $buttonAlternateOutline !default
+$buttonRegistryAlternateBoxShadow:      $buttonAlternateBoxShadow !default
+
+// * WIDE Button *
+$buttonWideFull: 100% !default
+
+// * SMALL Button *
+// This sets the size of the small button as a percentage of the primary button size. *
+// In the button macro, small buttons are part of the property "buttonSize." Currently, the only value is "small."
+$buttonSmallSizePercentage:             80% !default
+$buttonSmallPercentToDecimal:           ($buttonSmallSizePercentage/100%)
+$buttonSmallFontSize:                   $buttonFontSize * $buttonSmallPercentToDecimal !default
+$buttonSmallHeight:                     ($buttonHeight * $buttonSmallPercentToDecimal) * 1.13 !default
+$buttonSmallLineHeight:                 $buttonSmallHeight / $buttonSmallFontSize !default 
+$buttonSmallPadding:                    0 10px !default
+
+// * ICONS: Currently limited to directionals *
+$iconFontStack:                 $buttonFontStack !default
+$iconFontSize:                  $buttonFontSize !default
+$iconTextLineHeight:            $buttonHeight / $iconFontSize !default
+
+$iconSmallFontSize:             $iconFontSize
+$iconSmallTextLineHeight:       ($buttonSmallHeight / $iconFontSize) * 0.777 
+
+$iconPrimary:                   $_white !default
+$iconSecondary:                 $_white !default
+$iconRegistry:                  $_white !default
+$iconLink:                      $_black !default
+$iconMargin:                    6px !default
+
+// Directional Icon Sets
+// Option               Symbol      Entity/unicode                  Notes
+// ----------------------------------------------------------------------------------------------------------------
+// angle-quote           ‹ ›        &lsaquo; &lsaquo;               We rotate the glyphs for Up/Down
+// double-angle-quote    « »        &laquo; &raquo;                 We rotate the glyphs for Up/Down
+// angle-bracket         < >        &gt; &lt;                       We rotate the glyphs for Up/Down
+// fa-angle                         (trbl) f106 f105 f107 f104      http://fontawesome.io/icon/angle-right/
+// fa-angle-double                  (trbl) f102 f101 f103 f100      http://fontawesome.io/icon/angle-double-right/
+// fa-caret                         (trbl) f0d8 f0da f0d7 f0d9      http://fontawesome.io/icon/caret-right/
+// fa-chevron                       (trbl) f077 f054 f078 f053      http://fontawesome.io/icon/chevron-right/
+// border-angle-caret               Uses CSS to render a triangle   http://apps.eky.hk/css-triangle-generator/
+$primaryDirectionalIconSet:     angle-quote !default
+$secondaryDirectionalIconSet:   double-angle-quote !default
+$alternateDirectionalIconSet:   none !default
+// REGISTRY Directionals: 
+// Must be $primaryDirectionalIconSet, $secondaryDirectionalIconSet, $alternateDirectionalIconSet
+$registryDirectionalIconSet:    $secondaryDirectionalIconSet !default
+
+// In absence of Sass maps, we're using some lists to index some variable groupings. 
+$directionalIconSetIndex:       angle-quote double-angle-quote angle-bracket fa-angle fa-angle-double fa-caret fa-chevron border-angle-caret
+$directionalIconStackIndex:     $primaryDirectionalIconSet $secondaryDirectionalIconSet $alternateDirectionalIconSet !default
+$directionalFaIconSetIndex:     fa-angle, fa-angle-double, fa-caret, fa-chevron
+$directionalAngleGlyphIndex:    angle-quote double-angle-quote angle-bracket
+
+$directionalIconStack: primary !default
+
+// If a border exists on a primary or secondary button, adjust line-height on the 
+// buttons that lack a border to compensate difference in height.
+@if $buttonPrimaryBorder != none 
+    $buttonWithBorderHeight: $buttonHeight - (nth($buttonPrimaryBorder, 1) * 2)
+    $buttonTextLineHeight: $buttonWithBorderHeight / $buttonFontSize
+@if $buttonSecondaryBorder != none
+    $buttonWithBorderHeight: $buttonHeight - (nth($buttonSecondaryBorder, 1) * 2)
+    $buttonTextLineHeight: $buttonWithBorderHeight / $buttonFontSize
+
+@import buttons/button-base
+@import buttons/directional-angle-quote
+@import buttons/directional-font-awesome
+@import buttons/directional-border-angle

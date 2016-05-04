@@ -1,0 +1,162 @@
+// DIRECTIONAL ICON GLYPHS
+// This Sass partial (1) loops though a list of brand defined icon sets
+// (primary, secondary, alternate) set in the button vars. (2) Determines if
+// the specified icon sets are glyphs from an existing font stack. (3)
+// Calculates the correct line-height and font-sizes. (5) Builds the selectors
+// and pseudo elements to display the icons. It only builds the selectors when
+// they are needed. For example, if the Primary Icon Set is an angle quote and
+// the Secondary Icon Set is a FontAwesome icon, the primary icon set runs
+// through the loop below, while the secondary icon set will get sent off to the
+// to FontAwesome function that has different rules from the glyph stack.
+
+@each $set in $directionalIconStackIndex
+    @if $set != none
+        $directionalIconStackIndex: $primaryDirectionalIconSet $secondaryDirectionalIconSet $alternateDirectionalIconSet
+        @if $secondaryDirectionalIconSet == $set
+            $directionalIconStack: secondary-
+        @else if $alternateDirectionalIconSet == $set
+            $directionalIconStack: alternate-
+        @else
+            $directionalIconStack: ""
+        @if index($directionalAngleGlyphIndex, $set)
+            @if $set == angle-quote
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                %angle-quote
+                    &:before
+                        content: "\203A" //single angle quote right
+                    &.#{$icon-prefix}-directional-left
+                        &:before 
+                            content: "\2039" //single angle quote left
+                    &.#{$icon-prefix}-directional-down
+                        &:before 
+                            content: "\203A" //single angle quote right
+                    &.#{$icon-prefix}-directional-up
+                        &:before 
+                            content: "\2039" //single angle quote left
+            @if $set == double-angle-quote
+                @if $secondaryDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %double-angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else if $alternateDirectionalIconSet == $set
+                    $directionalIconStackIndex: alternate-
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %double-angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else
+                    $directionalIconStackIndex: ""
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %double-angle-quote
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                %double-angle-quote
+                    &:before
+                        content: "\00BB" // Double Angle Quote Right
+                    &.#{$icon-prefix}-directional-left
+                        &:before 
+                            content: "\00AB" // Double Angle Quote Left
+                    &.#{$icon-prefix}-directional-down
+                        &:before 
+                            content: "\00BB" // Double Angle Quote Right
+                    &.#{$icon-prefix}-directional-up
+                        &:before 
+                            content: "\2039" //single angle quote left
+            @if $set == angle-bracket
+                @if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-bracket
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else if $alternateDirectionalIconSet == $set
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-bracket
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                @else
+                    .#{$icon-prefix}-#{$directionalIconStack}directional
+                        @extend %commonAngleQuoteStyles
+                        @extend %angle-bracket
+                        .#{$btn-prefix}-small > &
+                            @extend %smallAngleQuoteStyles
+                %angle-bracket
+                    &:before
+                        content: ">" // Angle Bracket Right
+                    &.#{$icon-prefix}-directional-left
+                        &:before 
+                            content: "<" // Angle Bracket Left
+                    &.#{$icon-prefix}-directional-down
+                        &:before 
+                            content: ">" // Angle Bracket Right
+                    &.#{$icon-prefix}-directional-up
+                        &:before 
+                            content: "<" // Angle Bracket Left
+
+%commonAngleQuoteStyles
+    margin: 0 0 0 $iconMargin
+    float: right
+    $adjustedIconFontSize: $iconFontSize
+    @if $iconFontStack != $buttonFontStack
+        font-family: $iconFontStack
+    @if index($angleQuoteIsXheight, nth($iconFontStack,1))
+        $angleQuoteFontSize: $adjustedIconFontSize * 2.2
+        $angleQuoteLineHeight: $buttonHeight / $angleQuoteFontSize
+        +font-size($angleQuoteFontSize)
+        line-height: $angleQuoteLineHeight
+    @else if index($customSansSerif, nth($iconFontStack,1))
+        $angleQuoteFontSize: $adjustedIconFontSize * 2
+        $angleQuoteLineHeight: ($buttonHeight / $angleQuoteFontSize) * 0.833 // 0.78
+        +font-size($angleQuoteFontSize)
+        line-height: $angleQuoteLineHeight
+    @else
+        $angleQuoteFontSize: $adjustedIconFontSize * 1.875
+        $angleQuoteLineHeight: ($buttonHeight / $angleQuoteFontSize) * 0.91
+        +font-size($angleQuoteFontSize)
+        line-height: $angleQuoteLineHeight
+
+%smallAngleQuoteStyles
+    @if index($angleQuoteIsXheight, nth($iconFontStack,1)) 
+        $angleQuoteSmallFontSize: $iconSmallFontSize * 2.5
+        $angleQuoteSmallLineHeight: $angleQuoteSmallFontSize / $buttonSmallHeight
+        +font-size($angleQuoteSmallFontSize)
+        line-height: $angleQuoteSmallLineHeight
+    @else
+        $angleQuoteSmallFontSize: $iconSmallFontSize * 1.875
+        $angleQuoteSmallLineHeight: ($buttonSmallHeight / $angleQuoteSmallFontSize) * .909
+        +font-size($angleQuoteSmallFontSize)
+        line-height: $angleQuoteSmallLineHeight
+
+
+@if index($directionalIconStackIndex, angle-quote) or index($directionalIconStackIndex, double-angle-quote) or index($directionalIconStackIndex, angle-bracket)
+    .#{$icon-prefix}-directional-down,
+    .#{$icon-prefix}-directional-up
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1)
+        -webkit-transform: rotate(90deg)
+        -ms-transform: rotate(90deg)
+        transform: rotate(90deg)
+        margin: 4px 0 0 15px
+
+

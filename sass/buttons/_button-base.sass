@@ -1,0 +1,392 @@
+@import "base"
+@import "rem-calc"
+@import "material-shadows"
+
+@import "../node_modules/font-awesome/scss/variables"
+@import "../node_modules/font-awesome/scss/mixins"
+
+// Base button style + <button> reset.
+// This needs to be present on all CSS Buttons
+
+.#{$btn-prefix}
+    height: $buttonHeight
+    display: inline-block
+    margin: 0
+    background: none
+    cursor: pointer
+    vertical-align: middle
+    position: relative
+    box-sizing: border-box
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+    text-transform: $buttonTextTransform
+    text-decoration: none
+    text-align: center
+    font-family: $buttonFontStack
+    +font-size($buttonFontSize)
+    border: 1px solid transparent
+    padding: $buttonPadding
+    @if $buttonLabelFontSmoothing == true
+        -webkit-font-smoothing: antialiased
+        -moz-osx-font-smoothing: grayscale
+    @if nth($buttonFontStack,1) == Helvetica
+        line-height: $buttonTextLineHeight * 1.1
+    @else
+        line-height: $buttonTextLineHeight
+    @if $buttonFontWeight != normal
+        font-weight: $buttonFontWeight
+    @if $buttonBorderRadius != 0
+        border-radius: $buttonBorderRadius
+    // In typography, increasing "letter-spacing" is commonly called "loose
+    // tracking." Setting type in uppercase tends create an even horizontal
+    // outline and the font becomes too dark to read. Applying loose tracking
+    // to type set in uppercase typically improves legibility. It's not
+    // required for all typefaces, but I'd say most of the time it improves
+    // the legibility of type set in uppercase significantly.
+    @if $buttonTextTransform == uppercase and nth($buttonFontStack,1)
+        letter-spacing: .06rem
+    .ie7 & // removes additional horizontal padding
+        overflow: visible !important
+    &:disabled, 
+    &[disabled="disabled"] // IE8 support. 
+        opacity: .50
+        cursor: not-allowed
+    // Mozilla browsers add additional white space to <button> and <input>
+    // that's not accounted for. This removes it.
+    &::-moz-focus-inner
+        border: 0
+        padding: 0 
+        margin-top: -2px 
+        margin-bottom: -2px
+    // Working on this feature
+    // @if $buttonIconPadOffset != 0
+    //     $padTop: ()
+    //     $padRight: ()
+    //     $padBottom:()
+    //     $padLeft: ()
+    //     $offsetRight: ()
+    //     $offsetLeft: ()
+    //     @if length($buttonPadding) == 1
+    //         $padTop: $buttonPadding
+    //         $padRight: $buttonPadding
+    //         $padBottom: $buttonPadding
+    //         $padLeft: $padRight
+    //         $offsetRight: $padRight - $buttonIconPadOffset
+    //         $offsetLeft: $offsetRight
+    //     @else if length($buttonPadding) == 2 or length($buttonPadding) == 3
+    //         $padTop: nth($buttonPadding,1)
+    //         $padRight: nth($buttonPadding,2)
+    //         @if length($buttonPadding) == 2
+    //             $padBottom: nth($buttonPadding,1)
+    //         @else
+    //             $padBottom: nth($buttonPadding,3)
+    //         $padLeft: $padRight
+    //         $offsetRight: $padRight - $buttonIconPadOffset
+    //         $offsetLeft: $offsetRight
+    //         @extend %iconOffsets
+    //     @else
+    //         $padTop: nth($buttonPadding,1)
+    //         $padRight: nth($buttonPadding,2)
+    //         $padBottom: nth($buttonPadding,3)
+    //         $padLeft: nth($buttonPadding,4)
+    //         $offsetRight: $padRight - $buttonIconPadOffset
+    //         $offsetLeft: $padLeft - $buttonIconPadOffset
+    //     > .icon:empty
+    //         padding: 0 $offsetRight 0 0
+    //     > .icon.icon-directional-left:empty
+    //         padding: 0 $offsetLeft 0 0
+    //     &:not(.icon-directional)
+    //         padding: $padTop $padRight $padBottom 0
+    //     &:not(.icon-directional-left)
+    //         padding: $padTop 0 $padBottom $padLeft
+    //     .ie8 &
+    //         padding: $buttonPadding
+    //         > .icon.icon-directional-left
+    //             padding: $buttonPadding
+
+// dealing with a specificity issue where anchor is being defined in general/_common.sass
+// TODO: Check registry to see if these are necessary anymore.
+a 
+    &.#{$btn-prefix}-primary
+        color: $buttonPrimaryText
+        &:hover, &:active, &:visited
+            color: $buttonPrimaryText
+            text-decoration: none
+    &.#{$btn-prefix}-secondary
+        color: $buttonSecondaryText
+        &:hover, &:active, &:visited
+            color: $buttonSecondaryText
+            text-decoration: none
+    &.#{$btn-prefix}-flat
+        color: $buttonFlatText
+        &:hover, &:active, &:visited
+            color: $buttonFlatText
+            text-decoration: none
+    &.#{$btn-prefix}-alternate
+        color: $buttonAlternateText
+        &:hover, &:active, &:visited
+            color: $buttonAlternateText
+            text-decoration: none
+
+// Base definition for Primary Button
+.#{$btn-prefix}-primary
+    background: $buttonPrimaryBackground
+    color: $buttonPrimaryText
+    transition: box-shadow 0.7s 0.01s cubic-bezier(0.19, 1, 0.22, 1)
+    @if $buttonPrimaryBorder != none
+        border: $buttonPrimaryBorder
+    @if $buttonPrimaryOutline != none and $buttonPrimaryBoxShadow == none
+        outline: $buttonPrimaryOutline
+        margin: nth($buttonPrimaryOutline, 1)
+    @if $buttonPrimaryOutline == none and $buttonPrimaryBoxShadow != none
+        outline: $buttonPrimaryOutline
+        margin: nth($buttonPrimaryOutline, 1)
+    @if $buttonPrimaryBoxShadow != none
+        box-shadow: $buttonPrimaryBoxShadow
+    &:focus
+        // The contrast is getting washed out on dark solids.
+        // This drop-shadow treatment comes from the Google Material Design UI
+        // TODO: If we use this :focus treatment on buttons, we should use a var or mixin to config this
+        @if $buttonFocusDropShadowDepth != 0
+            +material-shadow($buttonFocusDropShadowDepth)
+        outline: none
+        @if $buttonPrimaryBoxShadow != none
+            outline: $buttonPrimaryOutline
+        .ie8 &
+            outline: 1px solid #000
+
+// Base definition for Secondary Button
+.#{$btn-prefix}-secondary
+    background: $buttonSecondaryBackground
+    color: $buttonSecondaryText
+    transition: box-shadow 0.7s 0.01s cubic-bezier(0.19, 1, 0.22, 1)
+    @if $buttonSecondaryBorder != none
+        border: $buttonSecondaryBorder
+    @if $buttonSecondaryOutline != none and $buttonSecondaryBoxShadow == none
+        outline: $buttonSecondaryOutline
+        margin: nth($buttonSecondaryOutline, 1)
+    @if $buttonSecondaryOutline == none and $buttonSecondaryBoxShadow != none
+        outline: $buttonSecondaryOutline
+        margin: nth($buttonSecondaryOutline, 1)
+    @if $buttonSecondaryBoxShadow != none
+        box-shadow: $buttonSecondaryBoxShadow
+        outline: $buttonSecondaryOutline
+    &:focus
+        @if $buttonFocusDropShadowDepth != 0
+            +material-shadow($buttonFocusDropShadowDepth)
+        outline: none
+        @if $buttonSecondaryBoxShadow != none
+            outline: $buttonSecondaryOutline
+        .ie8 &
+            outline: 1px solid #000
+
+// Base definition for Alternate Button
+.#{$btn-prefix}-alternate
+    background: $buttonAlternateBackground
+    color: $buttonAlternateText
+    transition: box-shadow 0.7s 0.01s cubic-bezier(0.19, 1, 0.22, 1)
+    @if $buttonAlternateBorder != none
+        border: $buttonAlternateBorder
+    @if $buttonAlternateOutline != none and $buttonAlternateBoxShadow == none
+        outline: $buttonAlternateOutline
+        margin: nth($buttonAlternateOutline, 1)
+    @if $buttonAlternateOutline == none and $buttonAlternateBoxShadow != none
+        outline: $buttonAlternateOutline
+        margin: nth($buttonAlternateOutline, 1)
+    @if $buttonAlternateBoxShadow != none
+        box-shadow: $buttonAlternateBoxShadow
+        outline: $buttonAlternateOutline
+    &:focus
+        @if $buttonFocusDropShadowDepth != 0
+            +material-shadow($buttonFocusDropShadowDepth)
+        outline: none
+        @if $buttonAlternateBoxShadow != none
+            outline: $buttonAlternateOutline
+        .ie8 &
+            outline: 1px solid #000
+
+// FLAT BUTTON: A flat button that displays a link, but a press but does not lift.
+// Base definition for Flat Button
+.#{$btn-prefix}-flat
+    color: $buttonFlatText
+    background: $buttonFlatBackground
+    text-decoration: none
+    font-size: $buttonFontSize
+    box-shadow: none
+    min-width: 88px
+    border-radius: $buttonFlatBorderRadius
+    transition: $buttonFlatTransition
+    .btn-label
+        transition: border-bottom 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)
+        border-bottom: $buttonFlatUnderscore
+        @if nth($buttonFlatUnderscore,3) != transparent
+            line-height: 1.55
+            display: inline-block
+            border-bottom: $buttonFlatUnderscore  
+    &:hover
+        color: $buttonFlatText
+        background: $buttonFlatHoverBckgrnd
+        @if nth($buttonFlatHoverUnderscore,3) != transparent
+            .btn-label
+                border-bottom: $buttonFlatHoverUnderscore
+
+// Base definition for Registry Buttons
+@if $buttonRegistryIsOn == true
+    .#{$btn-prefix}-registry
+        height: $buttonRegistryHeight
+        +font-size($buttonRegistryFontSize)
+        padding: $buttonRegistryPadding
+        @if $buttonRegistryFontStack != $buttonFontStack  
+            font-family: $buttonRegistryFontStack
+        @if $buttonRegistryTextTransform != $buttonTextTransform
+            text-transform: $buttonRegistryTextTransform
+        @if $buttonRegistryFontWeight != $buttonFontWeight
+            font-weight: $buttonRegistryFontWeight
+        @if $buttonRegistryBorderRadius != $buttonBorderRadius
+            border-radius: $buttonRegistryBorderRadius
+        @if nth($buttonFontStack,1) == Helvetica // Helvetica has a very odd line-height
+            line-height: $buttonRegistryTextLineHeight * 1.1
+        @else
+            line-height: $buttonRegistryTextLineHeight
+        &.btn-primary
+            background: $buttonRegistryPrimaryBackground
+            color: $buttonRegistryPrimaryText
+            @if $buttonRegistryPrimaryBorder != none
+                border: $buttonRegistryPrimaryBorder
+            @if $buttonRegistryPrimaryOutline != none and $buttonRegistryPrimaryBoxShadow == none
+                outline: $buttonRegistryPrimaryOutline
+                margin: nth($buttonRegistryPrimaryOutline, 1)
+            @if $buttonRegistryPrimaryBoxShadow != none
+                box-shadow: $buttonRegistryPrimaryBoxShadow
+            @if $buttonRegistryPrimaryBoxShadow != none
+                &:focus
+                    outline: $buttonRegistryPrimaryOutline
+        &.btn-secondary
+            background: $buttonRegistrySecondaryBackground
+            color: $buttonRegistrySecondaryText
+            @if $buttonRegistrySecondaryBorder != none
+                border: $buttonRegistrySecondaryBorder
+            @if $buttonRegistrySecondaryOutline != none and $buttonRegistrySecondaryBoxShadow == none
+                outline: $buttonRegistrySecondaryOutline
+                margin: nth($buttonRegistrySecondaryOutline, 1)
+            @if $buttonRegistrySecondaryBoxShadow != none
+                box-shadow: $buttonRegistrySecondaryBoxShadow
+            @if $buttonRegistrySecondaryBoxShadow != none
+                &:focus
+                    outline: $buttonRegistrySecondaryOutline
+        &.btn-alternate
+            background: $buttonRegistryAlternateBackground
+            color: $buttonRegistryAlternateText
+            @if $buttonRegistryAlternateBorder != none
+                border: $buttonRegistryAlternateBorder
+            @if $buttonRegistryAlternateOutline != none and $buttonRegistryAlternateBoxShadow == none
+                outline: $buttonRegistryAlternateOutline
+                margin: nth($buttonRegistryAlternateOutline, 1)
+            @if $buttonRegistryAlternateBoxShadow != none
+                box-shadow: $buttonRegistryAlternateBoxShadow
+            @if $buttonRegistryAlternateBoxShadow != none
+                &:focus
+                    outline: $buttonRegistryAlternateOutline
+
+// Base definition for small button variant
+.#{$btn-prefix}-small
+    height: $buttonSmallHeight
+    padding: $buttonSmallPadding
+    +font-size($buttonSmallFontSize)
+    @if nth($buttonFontStack,1) == Helvetica or nth($buttonFontStack,1) == Ultramagnetic
+        line-height: $buttonSmallLineHeight * 1.1
+    @else
+        line-height: $buttonSmallLineHeight
+    .#{$icon-prefix}-directional
+        line-height: $iconSmallTextLineHeight
+
+// Base definition for wide button variant. This will extend out and cover variable widths some day...
+.#{$btn-prefix}-full
+    width: $buttonWideFull
+
+// ICONS
+
+// Icon Base and Reset
+.#{$icon-prefix}
+    display: inline-block
+    position: relative
+    font-variant: normal
+    font-style: normal
+    text-rendering: auto
+    -webkit-font-smoothing: antialiased
+    -moz-osx-font-smoothing: grayscale
+    @if $iconFontStack == "FontAwesome"
+        font-style: normal
+        font-weight: normal
+        transform: translate(0, 0)
+    .ie7 & // Assures that IE7 users see the text of the button. 
+        display: none !important
+        margin-top: 0 !important // even though it's not displaying, margin and font-size are still visible.
+        font-size: 12px !important
+
+.#{$icon-prefix}-directional
+    margin: 0 0 0 $iconMargin
+    float: right
+    // We need to use a multiclass selector here for specificity reasons.
+    // We could swap .icon-directional out in a macro param to avoid this, 
+    // but this will add redundancy.
+    &.#{$icon-prefix}-directional-left
+        @if index($directionalFaIconSetIndex, $primaryDirectionalIconSet) or index($directionalFaIconSetIndex, $secondaryDirectionalIconSet) or index($directionalFaIconSetIndex, $alternateDirectionalIconSet)
+            margin: 1px $iconMargin 0 0
+        @else
+            margin: 0 $iconMargin 0 0
+        float: left
+
+// @if nth($buttonSecondaryOutline, 1) != none
+//     .ie8 .#{$btn-prefix}-secondary
+//         // IE8 won't draw borders or outlines outside a parent element, so a pseudo element
+//         // won't work here. These properties adjust the button so that a single border will 
+//         // match the size of the primary button.
+//         padding: (nth($buttonSecondaryOutline, 1) * 4)  20px
+//         height: (nth($buttonSecondaryOutline, 1) * 4) + $buttonHeight 
+
+// utilities (kinda)
+
+.#{$btn-prefix}-margin
+    margin-top: 20px
+
+
+// Button Pulse - Visual feedback when a button is pressed.
+@-webkit-keyframes button-pulse
+    0%
+        -webkit-transform: scale(1)
+        transform: scale(1)
+
+    50%
+        -webkit-transform: scale(.98)
+        transform: scale(.98)
+
+    100%
+        -webkit-transform: scale(1)
+        transform: scale(1)
+
+@keyframes button-pulse
+    0%
+        -webkit-transform: scale(1)
+        -ms-transform: scale(1)
+        transform: scale(1)
+
+    50%
+        -webkit-transform: scale(.98)
+        -ms-transform: scale(.98)
+        transform: scale(.98)
+
+    100%
+        -webkit-transform: scale(1)
+        -ms-transform: scale(1)
+        transform: scale(1)
+
+.btn:active
+    -webkit-animation-name: button-pulse
+    animation-name: button-pulse
+    -webkit-animation-duration: 300ms
+    animation-duration: 300ms
+    -webkit-animation-fill-mode: both
+    animation-fill-mode: both
